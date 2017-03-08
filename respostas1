@@ -1,0 +1,30 @@
+O que são sistemas embarcados?
+Resposta: É um sistema microprocessado encapsulado que realiza tarefas predefinidas e específicas. 
+
+O que são sistemas microprocessados?
+Resposta: Sistemas que utilizam circuitos integrados usando funções de uma unidade central de computador, que pode ser programável e armazena funções em sua memória.
+
+Apresente aplicações de sistemas embarcados:
+Para a indústria automotiva:
+Resposta: Na indústria automotiva, podem ser utilizados para otimizar o uso manual de funções já existentes como som, afim de as tornar mais intuitivas
+e programáveis de forma mais rápida, além de integrar elementos inovadores e tecnológicos em apenas um computador de bordo.
+
+Para eletrodomésticos:
+Resposta: Da mesma forma, com processadores, os eletrodomésticos de tornam mais "inteligentes", além da possibilidade de desepenharem várias funções
+distintas em apenas um aparelho.
+
+Para automação industrial:
+Resposta: Na automação industrial, o microcontrolador é utilizado para a junção dos elementos de eletrônica e mecânica, além de programação, para otimização
+do controle da produção na indústria. Além de ser usado para a operação da indústria em si. 
+
+Cite arquiteturas possíveis e diferenças entre elas.
+Resposta: 80386: Capacidade de Endereçamento:
+32 bits de endereço Ë 4.0 Gigabytes
+Operações com: bit, campos de bit, string de bits, byte, word, double word, quad word, BCD, ASCII,
+apontador e ponto flutuante;
+ I486: A arquitetura interna é otimizada em relação ao 80386.
+PENTIUM, PENTIUM MMX E PRO. 
+
+
+Por que usamos o MSP430 na disciplina, ao invés de outro microcontrolador?
+Resposta: Por conta do custo mais baixo, baixo custo de energia e por haver certas limitações, tem melhor uso didático. 
