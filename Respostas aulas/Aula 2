@@ -1,0 +1,47 @@
+Respostas aula 2.
+Data: 15/03/2017
+	
+	Q1. Quais as diferenças entre os barramentos de dados e de endereços?
+O barramento de endereço é usado para selecionar a origem ou destino de sinais transmitidos em um dos outros barramentos. O barramento de endereços pode endereçar 2^n de acordo com o padrão de bits permitidos. 
+
+	
+	Q2. Quais são as diferenças entre as memórias RAM e ROM?
+A memória RAM perde os dados que foram gravados nela quando a energia é desligada. Já a memória ROM, consegue manter os dados após a energia ser desligada e escreve de modo mais lento que a memória RAM.
+
+	
+	Q3. Considere o código abaixo, de 12 linhas:
+	
+	    1.   #include <stdio.h>
+	    2.   int main(void)
+	    3.   {
+	    4.      int i;
+	    5.      printf("Insira um número inteiro: ");
+	    6.      scanf("%d", &i);
+	    7.      if(i%2)
+	    8.         printf("%d eh impar.\n");
+	    9.      else
+	   10.         printf("%d eh par.\n");
+	   11.      return 0;
+	   12.   }
+	
+	Para este código, responda:
+		A variável 'i' é armazenada na memória RAM ou ROM? Por quê?
+Na memória RAM. Porque após o uso do programa, o dado no endereço pode ser apagado e substituído por outro dado na memória.
+		O programa compilado a partir deste código é armazenado na memória RAM ou ROM? Por quê?
+Na memória ROM, pois sempre que o programa for compilado, ele vai acessar o dados onde o programa foi salvo na memória.
+
+	
+	Q4. Quais são as diferenças, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
+	A arquitetura Von Neumannn é menos eficiente que a arquitetura Harvard, no entanto é mais rápida e ocupa menos espaço. 
+
+	Q5. Considere a variável inteira 'i', armazenando o valor 0x8051ABCD. Se 'i' é armazenada na memória a partir do endereço 0x0200, como ficam este byte e os seguintes, considerando que a memória é:
+		Little-endian?
+200 202 204 206
+80  51  AB  CD
+		Big-endian?
+200 202 204 206
+CD  AB   51  80
+	
+	Q6. Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas variáveis de 32 bits?
+Utilizando quatro registradores e flags para poder fazer o somatório de todos os bits uns com os outros. 
+
