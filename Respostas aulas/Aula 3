@@ -1,0 +1,126 @@
+Data: 22/03/2017
+
+1. Dada uma variável 'a' do tipo 'char' (um byte), escreva os trechos de código em C para:
+	(a) Somente setar o bit menos significativo de 'a'.
+  
+  #include <msp430g2553.h>
+  
+  void main(void)
+  {
+  WDTCL = WDTPW | WDTHOLD;
+  PIDIR=0x01;
+  PIOUT=0x01;
+  for(;;)
+  {
+  }
+  }
+  
+	(b) Somente setar dois bits de 'a': o menos significativo e o segundo menos significativo.
+  
+    
+  #include <msp430g2553.h>
+  
+  void main(void)
+  {
+  WDTCL = WDTPW | WDTHOLD;
+  PIDIR=0x02;
+  PIOUT=0x02;
+  for(;;)
+  {
+  }
+  }
+	(c) Somente zerar o terceiro bit menos significativo de 'a'.
+  
+    
+  #include <msp430g2553.h>
+  
+  void main(void)
+  {
+  WDTCL = WDTPW | WDTHOLD;
+  PIDIR=0xFB;
+  PIOUT=0xFB;
+  for(;;)
+  {
+  }
+  }
+  
+	(d) Somente zerar o terceiro e o quarto bits menos significativo de 'a'.
+  
+    
+  #include <msp430g2553.h>
+  
+  void main(void)
+  {
+  WDTCL = WDTPW | WDTHOLD;
+  PIDIR=0xF3;
+  PIOUT=0xF3;
+  for(;;)
+  {
+  }
+  }
+	(e) Somente inverter o bit mais significativo de 'a'.
+    
+  #include <msp430g2553.h>
+  void main(void)
+  {
+  WDTCL = WDTPW | WDTHOLD;
+  PIDIR= BIT7;
+  for(;;)
+  {
+  if(PIIN & BIT7 == 1 | PIIN & BIT7 ==0)
+  PIOUT=~(BIT7)
+  }
+  }
+  
+	(f) Inverter o nibble mais significativo de 'a', e setar o nibble menos significativo de 'a'. 
+  #include <msp430g2553.h>
+  #define a7 BIT7
+  #define a6 BIT6
+  #define a5 BIT5
+  #define a4 BIT4
+  #define a3 BIT3
+  #define a2 BIT2
+  #define a1 BIT1
+  #define a0 BIT0
+  void main(void)
+  {
+  WDTCL = WDTPW | WDTHOLD;
+  PIDIR= a7+a6+a5+a4+a3+a2+a1+a0;
+  PIOUT=~(a7+a6+a5+a4) & |(a3+a2+a1+a0);
+  for(;;)
+  {
+  }
+  }
+
+2. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar os dois LEDs ininterruptamente.
+
+#include <msp430g2553.h>
+#define LED1 BIT0
+#define LED2 BIT6
+void main(void)
+{
+ WDTCL = WDTPW | WDTHOLD;
+ PIDIR = LED1+LED2;
+ PIOUT = LED1+LED2;
+ for(;;)
+ {
+ }
+ }
+
+3. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar duas vezes os dois LEDs sempre que o usuário pressionar o botão.
+void main(void)
+{
+ WDTCL = WDTPW | WDTHOLD;
+i = 0;
+n = 2;
+PIOUT=0;
+PIDIR=LED1+LED2;
+for 
+{
+if (PIIN &BNT ==
+
+4. Considerando a placa Launchpad do MSP430, faça uma função em C que pisca os dois LEDs uma vez.
+
+5. Reescreva o código da questão 2 usando a função da questão 4.
+
+6. Reescreva o código da questão 3 usando a função da questão 4.
