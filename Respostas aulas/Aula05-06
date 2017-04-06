@@ -7,32 +7,19 @@ Para cada questão, escreva funções em C e/ou sub-rotinas na linguagem Assembl
 	x(n+1) = (x(n) + S/x(n))/2
 
 O protótipo da função é:
-	unsigned int Raiz_Quadrada(unsigned int S);
-{int n = 5;
-int i;
-float S;
-int x;
 
-for ( i = 0; i<=n+1; i++)
-x*n+1=   (x*n+( S/ x*n))/2;
-return;}
-
+	unsigned int Raiz_Quadrada(unsigned int S);{
+float x1 = (S * 1.0) /2;
+float x = (x1+(S/x1))/2;
+while (abs(x1-x) >= 0.0000001){
+x1 = x;
+x = (x1 + (S/x1))/2;
+}
+return x;
+}
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. A variável 'S' é fornecida pelo registrador R15, e a raiz quadrada de 'S' (ou seja, a variável 'x') é fornecida pelo registrador R15 também.
-mov.w #0, R5;
-push R15;
-rra.w R15;
-mov.w R15, R4;
-add.w #1, R5
-push R4;
-call unsigned_raiz;
-tst R5;
-comp #5, R5
-jeq end;
-inc R5;
-unsigned_raiz:                                                                                          	x(n+1) = (x(n) + S/x(n))/2
 
-add.w R6, R4;
 
 2. (a) Escreva uma função em C que calcule 'x' elevado à 'N'-ésima potência, seguindo o seguinte protótipo: 
 
@@ -77,3 +64,4 @@ Se o vetor for palíndromo, retorne o valor 1. Caso contrário, retorne o valor 
 	int Palindromo(int vetor[ ], int tamanho);
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. O endereço do vetor de entrada é dado pelo registrador R15, o tamanho do vetor é dado pelo registrador R14, e o resultado é dado pelo registrador R15.
+
