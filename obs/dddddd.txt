@@ -1,0 +1,20 @@
+unsigned int Div_Unsigned2 (unsigned int a, unsigned int b);
+{
+unsigned int i;
+for (i = 0; a>=b, i++)
+{a= a-b;}
+return i;
+}
+
+
+Div_Unsigned: clr R13;
+For_Div: cmp R14, R15;
+jl END_FOR_DIV;
+sub R14, R15;
+inc R13;
+jmp For_Div;
+END_FOR_DIV: mov R13, R15;
+ret;
+
+---------------------------------------------------------------------------
+
