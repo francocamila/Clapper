@@ -18,3 +18,56 @@ ret;
 
 ---------------------------------------------------------------------------
 
+Potência
+
+int Potencia (int X, int N);
+{int sign = 0 p=1;
+if (N<0)
+{ N = -N;
+sign = 1;}
+
+while (N>0)
+{p = Mult_Signed(X, p);
+N--;
+}
+if (sign==1)
+{return Div_Signed(1,p);
+else
+return p;}
+}
+
+
+Potencia: 
+push R4;
+push R5;
+clr R4;
+mov.w #1, R5;
+comp #0, R14;
+jge R14;
+inc R14;
+mov.w #1, R4;
+WHILE_POT: cmp #1, R14;
+jl WHILE_POT_END;
+push R15;
+push R14;
+mov.w R5, R14;
+call Mult_Signed;
+mov.w R15, R5;
+pop R14;
+pop R15;
+dec R14;
+jmp WHILE_POT;
+WHILE_POT_END: 
+cmp #1 R4;
+jne POT_END;
+mov.w #1, R15;
+mov.w R5, R14;
+call Div_Signed;
+pop R5;
+pop R4;
+ret;
+POT_END: mov.w R5, R15;
+pop R5;
+pop R4;
+ret;
+
