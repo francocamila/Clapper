@@ -18,7 +18,7 @@ ret;
 
 ---------------------------------------------------------------------------
 
-Pot�ncia
+Potência
 
 int Potencia (int X, int N);
 {int sign = 0 p=1;
@@ -70,4 +70,35 @@ POT_END: mov.w R5, R15;
 pop R5;
 pop R4;
 ret;
+---------------------------------------------------------------------------------------------------------------------------------
+
+# fazer div_signed
+
+
+sequência fibonacci
+
+void Fibonacci (int A[], int N);
+{int i; 
+A[0] = 0; A[1] = 1;
+for (i =2; i<N; i++)
+{ A[i] = A[i-1]+A[i-2];
+}
+}
+
+Fibonacci: clr 0(R15);
+mov.w #1 2(R15);
+mov.w #2, R13;
+cmp R14, R13; ////// i>=N?
+jge END_FOR_FIBO;
+mov.w R13, R12; ///// R12 = A + 2(i-2) = &A[i-2]
+sub #2, R12;
+rla R12;
+add R15, R12;
+mov 0(R12), 4(R12);//////A[i]=A[i-2]
+add 2(R12), 4(R12);
+inc R13;
+jmp FOR_FIBO;
+END_FOR_FIBO:
+ret;
+
 
