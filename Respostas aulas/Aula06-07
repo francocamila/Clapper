@@ -11,7 +11,7 @@ O protótipo da função é:
 	unsigned int Raiz_Quadrada(unsigned int S);{
 float x1 = (S * 1.0) /2;
 float x = (x1+(S/x1))/2;
-while (abs(x1-x) >= 0.0000001){
+while ((x1-x) >= 0.0000001){
 x1 = x;
 x = (x1 + (S/x1))/2;
 }
@@ -19,42 +19,226 @@ return x;
 }
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. A variável 'S' é fornecida pelo registrador R15, e a raiz quadrada de 'S' (ou seja, a variável 'x') é fornecida pelo registrador R15 também.
-
+mov.w R15, R4 // R4 = S
+mov.w R4, R5
+rra.w R5 // x1 = S/2
+Div_Unsigned: clr R13;
+	For_Div:
+push.w R4;
+ cmp R4, R5;
+	jl END_FOR_DIV;
+	sub R4, R5;
+	inc R13;
+	jmp For_Div;
+	END_FOR_DIV: mov R13, R7;
+pop.w R4;
+	ret;
+add.w R7, R5 // x1 + S/x1
+mov.w R5, R15 // x = x1 + S/x1
+rra.w R15 x = x/2
+WHILE_RAIZQUADRADA:
+mov.w #0.0000001, R6
+sub.w R15, R5
+cmp R6, R5
+jl END_WHILE_RAIZQUADRADA
+call Div_Unsigned
+mov.w R5, R15; // x1 = x
+add.w R7, R5 // x1 + S/x1
+mov.w R5, R15 // x = x1 + S/x1
+rra.w R15 x = x/2
+dec R5;
+END_WHILE¬_RAIZQUADRADA:
+ret;
 
 2. (a) Escreva uma função em C que calcule 'x' elevado à 'N'-ésima potência, seguindo o seguinte protótipo: 
 
 	int Potencia(int x, int N);
 
+{intsign = 0 p=1;
+	if (N<0)
+	{ N = -N;
+	sign = 1;}
+	
+	while (N>0)
+	{p = Mult_Signed(X, p);
+	N--;
+	}
+	if (sign==1)
+	{return Div_Signed(1,p);
+	else
+	return p;}
+	}
+	
+
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. 'x' e 'n' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida no registrador R15.
+Potencia: 
+	push R4;
+	push R5;
+	clr R4;
+	mov.w #1, R5;
+	comp #0, R14;
+	jge R14;
+	inc R14;
+	mov.w #1, R4;
+	WHILE_POT: cmp #1, R14;
+	jl WHILE_POT_END;
+	push R15;
+	push R14;
+	mov.w R5, R14;
+	call Mult_Signed;
+	mov.w R15, R5;
+	pop R14;
+	pop R15;
+	dec R14;
+	jmp WHILE_POT;
+	WHILE_POT_END: 
+	cmp #1 R4;
+	jne POT_END;
+	mov.w #1, R15;
+	mov.w R5, R14;
+	call Div_Signed;
+	pop R5;
+	pop R4;
+	ret;
+	POT_END: mov.w R5, R15;
+	pop R5;
+	pop R4;
+	ret;
+
 
 3. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula a divisão de 'a' por 'b', onde 'a', 'b' e o valor de saída são inteiros de 16 bits. 'a' e 'b' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
+Div_Unsigned: clr R13;
+	For_Div: cmp R14, R15;
+	jl END_FOR_DIV;
+	sub R14, R15;
+	inc R13;
+	jmp For_Div;
+	END_FOR_DIV: mov R13, R15;
+	ret;
 
 4. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o resto da divisão de 'a' por 'b', onde 'a', 'b' e o valor de saída são inteiros de 16 bits. 'a' e 'b' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
-
+A – R15; b – 14;
+push.w R15
+RESTO:
+call Div.Unsigned
+call Mult_Unsigned
+mov.w R15, R4
+pop.w R15
+sub.w R4, R15
+ret;
 5. (a) Escreva uma função em C que indica a primalidade de uma variável inteira sem sinal, retornando o valor 1 se o número for primo, e 0, caso contrário. Siga o seguinte protótipo:
 
 	int Primalidade(unsigned int x);
+{ for (i = 2; i< x; i++){
+If (x% i == 0) return 0;
+}
+return 1;}
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. A variável de entrada é fornecida pelo registrador R15, e o valor de saída também.
-
+mov.w #2, R14;
+for_Primalidade:
+cmp R14, R15;
+jge For_Primalidade_End;
+call RESTO;
+cmp #0, R15;
+jne RETURN1;
+mov.w #0, R15;
+ret;
+inc R14;
+jmp For_Primalidade;
+RETURN1:
+mov.w #1, R15;
+ret;
+inc R14;
+jmp For_Primalidade;
+For_Primalidade_End:
+ret;
 6. Escreva uma função em C que calcula o duplo fatorial de n, representado por n!!. Se n for ímpar, n!! = 1*3*5*...*n, e se n for par, n!! = 2*4*6*...*n. Por exemplo, 9!! = 1*3*5*7*9 = 945 e 10!! = 2*4*6*8*10 = 3840. Além disso, 0!! = 1!! = 1.
 O protótipo da função é:
 
 	unsigned long long DuploFatorial(unsigned long long n);
+{
+{ if (n == 0 || n ==1)
+Return 1;}
+Return DuploFatorial(n-2)*n;
 
 7. (a) Escreva uma função em C que calcula a função exponencial da seguinte forma:
 	
 Considere o cálculo até o termo n = 20. O protótipo da função é double ExpTaylor(double x);
+{
+double sum = 1;
+for ( int i = 19; i>0; i--)
+{
+sum = 1 + x*sum/i;
+}
+return sum;
+}
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430, mas considere que os valores de entrada e de saída são inteiros de 16 bits. A variável de entrada é fornecida pelo registrador R15, e o valor de saída também.
+Exp_taylor:
+push.w R15;
+mov.w #1, R4;
+mov.w #19, R14;
+For_exp_taylor:
+Comp #0, R14;
+jne end_for_exp_taylor;
+mov.w R4, R15;
+push.w R14;
+call Div_Unsigned;
+mov.w R15, R5;
+mov.w R14, R6;
+pop.w R14;
+pop.w R15;
+call Mult_Unsigned;
+add.w #1, R15;
+dec R14;
+jmp For_exp_taylor;
+end_for_exp_taylor:
+ret;
 
 8. Escreva uma sub-rotina na linguagem Assembly do MSP430 que indica se um vetor esta ordenado de forma decrescente. Por exemplo:
 [5 4 3 2 1] e [90 23 20 10] estão ordenados de forma decrescente.
 [1 2 3 4 5] e [1 2 3 2] não estão.
 O primeiro endereço do vetor é fornecido pelo registrador R15, e o tamanho do vetor é fornecido pelo registrador R14. A saída deverá ser fornecida no registrador R15, valendo 1 quando o vetor estiver ordenado de forma decrescente, e valendo 0 em caso contrário.
 
+
+Atual – R15(1); tamanho – R14;
+Isord: 
+Cmp 0(R15), R14
+Jeq else_if_isord;
+Cmp 2(R15), 0(R15);
+Jl else_if_isord;
+Mov 2(R15), 0(R15);
+dec R14;
+Jmp Isord;
+Ret;
+else_if_isord:
+mov #0, R15;
+ret;
+
 9. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o produto escalar de dois vetores, 'a' e 'b':
-	
 O primeiro endereço do vetor 'a' deverá ser passado através do registrador R15, o primeiro endereço do vetor 'b' deverá ser passado através do registrador R14, e o tamanho do vetor deverá ser passado pelo registrador R13. A saída deverá ser fornecida no registrador R15.
+
+Clr R12;
+Clr R11;
+For_produto_escalar:
+Cmp R13, R12;
+Jge End_for_produto_escalar;
+Push R15;
+Push R14;
+Add.w R12, R15;
+Add.w R12, R14;
+Mov.w 0(R15), R15;
+Mov.w 0(R14), R14;
+Call Mult_Signed;
+Add.w R15, R11;
+Pop R15;
+Pop R14;
+Inc R12;
+Inc R12;
+Jmp For_produto_escalar;
+End_for_produto_escalar:
+Mov.w R11, R15;
+Ret;
 
 10. (a) Escreva uma função em C que indica se um vetor é palíndromo. Por exemplo:
 	[1 2 3 2 1] e [0 10 20 20 10 0] são palíndromos.
@@ -64,4 +248,5 @@ Se o vetor for palíndromo, retorne o valor 1. Caso contrário, retorne o valor 
 	int Palindromo(int vetor[ ], int tamanho);
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. O endereço do vetor de entrada é dado pelo registrador R15, o tamanho do vetor é dado pelo registrador R14, e o resultado é dado pelo registrador R15.
+
 
