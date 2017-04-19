@@ -132,4 +132,20 @@ jmp FOR_FIBO;
 END_FOR_FIBO:
 ret;
 
-
+MULT_signed:
+        
+        PUSH    R15
+        RLA     R15                                             
+        JNC     Third_else_if_MULT_signed                       
+        POP     R15
+        PUSH    R14
+        RLA     R14                                             
+        JNC     Second_else_if_MULT_signed                       
+        POP     R14
+        INV     R15                                          
+        INC     R15                                              
+        INV     R14
+        INC     R14
+        CALL    #MULT_unsigned
+        CLR     R14
+        RET          
