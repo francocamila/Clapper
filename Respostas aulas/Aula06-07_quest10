@@ -1,0 +1,45 @@
+10. (a) Escreva uma função em C que indica se um vetor é palíndromo. Por exemplo:
+	[1 2 3 2 1] e [0 10 20 20 10 0] são palíndromos.
+	[5 4 3 2 1] e [1 2 3 2] não são.
+Se o vetor for palíndromo, retorne o valor 1. Caso contrário, retorne o valor 0. O protótipo da função é:
+	int Palindromo(int vetor[ ], int tamanho);
+{int i, j, pal=0;
+For (i = 0; i>tamanho/2; i++){
+For (j = tamanho -1; j>tamanho/2; j--){
+If (vetor[i] == vetor[j]){
+Pal =  1;
+}
+}
+}
+If (pal==0){
+Return 1;
+Else 
+Return 0;}
+(b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. O endereço do vetor de entrada é dado pelo registrador R15, o tamanho do vetor é dado pelo registrador R14, e o resultado é dado pelo registrador R15.
+Palindromo:
+Clr R7;
+Mov.w R14, R4; // tamanho
+Rra.w R4; // tamanho/2
+Clr R5;// i =0
+Mov.w R14, R6; //j = tamanho
+Sub.w #1, R6; // j = tamanho -1
+For1_palindromo:
+Cmp R5, R4;
+Jge End_for1_palindromo;
+For2_palindromo: 
+Cmp R6, R4;
+Jge End_for1_palindromo;
+If_palindromo:
+Mov.w 0(R15), R6;
+Mov.w 2(R15), R5;
+Cmp 0(R6), 0(R5);
+Jne End_for1_palindromo;
+Mov.w #1, R7;
+End_for1_palindromo:
+Cmp #0, R7;
+Jne RETURN0P;
+Mov.w #1, R15;
+Ret;
+RETURN0P:
+Clr R15;
+Ret;
