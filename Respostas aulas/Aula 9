@@ -1,6 +1,8 @@
 Data: 03/05/2017
 
-1. Escreva uma função em C que faz o debounce de botões ligados à porta P1.#include 
+1. Escreva uma função em C que faz o debounce de botões ligados à porta P1.
+
+#include 
 <msp430.h> 
 #define LED1 BIT0
 #define LED2 BIT6
@@ -35,10 +37,95 @@ int main(void)
 
 2. Escreva um código em C que lê 9 botões multiplexados por 6 pinos, e pisca os LEDs da placa Launchpad de acordo com os botões. Por exemplo, se o primeiro botão é pressionado, os LEDs piscam uma vez; se o segundo botão é pressionado, os LEDs piscam duas vezes; e assim por diante. Se mais de um botão é pressionado, os LEDs não piscam.
 
+#include <msp430.h> 
+#define LED1 BIT0
+#define LED2 BIT6
+#define LEDS (LED1|LED2)
+#define M1 BIT0
+#define M2 BIT1
+#define M3 BIT2
+#define M4 BIT3
+#define M5 BIT4
+#define M6 BIT5
+#define MT (M1+M2+M3+M4+M5+M6)
 
+void delay(volatile unsigned int i)
+{
+    while((i--)>0);
+}
 
+int main(void)
+{
+    int i;
+    WDTCTL = WDTPW|WDTHOLD;
+    P1OUT &=~ MT;
+    if(P1DIR &=~ (M2+M3+M5+M6)){
+    P1DIR |= M1+M4;
+    P1OUT |= M1;
+    for (i=0;i<=1;i++){
+        delay(0xffff);
+        P1OUT^=LEDS;}
+    }
 
+    else if(P1DIR &=~ (M1+M3+M5+M6)){
+    P1DIR |= M2+M4;
+    P1OUT |= M2;
+    for (i=0;i<=2;i++){
+        delay(0xffff);
+        P1OUT^=LEDS;}
+    }
 
+    else if(P1DIR &=~ (M1+M2+M5+M6)){
+     P1DIR |= M3+M4;
+     P1OUT |= M3;
+     for (i=0;i<=3;i++){
+         delay(0xffff);
+         P1OUT^=LEDS;}
+     }
+    else if(P1DIR &=~ (M2+M3+M4+M6)){
+     P1DIR |= M1+M5;
+     P1OUT |= M1;
+     for (i=0;i<=4;i++){
+         delay(0xffff);
+         P1OUT^=LEDS;}
+    }
+     else if(P1DIR &=~ (M1+M3+M4+M6)){
+      P1DIR |= M2+M5;
+      P1OUT |= M2;
+      for (i=0;i<=5;i++){
+          delay(0xffff);
+          P1OUT^=LEDS;}
+     }
+     else if(P1DIR &=~ (M1+M2+M4+M6)){
+        P1DIR |= M3+M5;
+        P1OUT |= M3;
+        for (i=0;i<=6;i++){
+            delay(0xffff);
+            P1OUT^=LEDS;}
+       }
+     else if(P1DIR &=~ (M2+M3+M4+M5)){
+        P1DIR |= M1+M6;
+        P1OUT |= M1;
+        for (i=0;i<=7;i++){
+            delay(0xffff);
+            P1OUT^=LEDS;}
+       }
+     else if(P1DIR &=~ (M1+M3+M4+M5)){
+        P1DIR |= M2+M6;
+        P1OUT |= M2;
+        for (i=0;i<=8;i++){
+            delay(0xffff);
+            P1OUT^=LEDS;}
+       }
+     else if(P1DIR &=~ (M1+M2+M4+M5)){
+        P1DIR |= M3+M6;
+        P1OUT |= M3;
+        for (i=0;i<=9;i++){
+            delay(0xffff);
+            P1OUT^=LEDS;}
+       }
+    return 0;
+}
 
 
 
