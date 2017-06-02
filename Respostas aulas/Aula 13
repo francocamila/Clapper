@@ -1,0 +1,135 @@
+Data: 02/06/2017
+	
+	Para todas as questões abaixo, utilize o modo de comparação do Timer A.
+	
+	1. Para os itens abaixo, confira a diferença no brilho do LED.
+	(a)	Pisque o LED no pino P1.6 numa frequência de 100 Hz e ciclo de trabalho de 25%.
+#include <msp430.h>
+#define LED BIT6
+#define PERIODO 10000
+#define j 2500
+
+int main (void){
+WDTL = WDTPW + WDTHOLD;
+BCSCTL1 = CALBC1_1MHZ;
+DCOCLT = CALDCO_1MHZ;
+P1DIR |= LED;
+P1SEL |= LED;
+P1SEL2 &= ~LED;
+TACCR0 = PERIODO-1;
+TACCR1 = j-1;
+TACCTL1 = OUTMOD_7;
+TACTL = TASSEL_2 + ID_1 + MC_1;
+_BIS_SR(LPM0_bits);
+return 0;
+}
+	(b)	Pisque o LED no pino P1.6 numa frequência de 100 Hz e ciclo de trabalho de 50%.
+#include <msp430.h>
+#define LED BIT6
+#define PERIODO 10000
+#define j 5000
+
+int main (void){
+WDTL = WDTPW + WDTHOLD;
+BCSCTL1 = CALBC1_1MHZ;
+DCOCLT = CALDCO_1MHZ;
+P1DIR |= LED;
+P1SEL |= LED;
+P1SEL2 &= ~LED;
+TACCR0 = PERIODO-1;
+TACCR1 = j-1;
+TACCTL1 = OUTMOD_7;
+TACTL = TASSEL_2 + ID_1 + MC_1;
+_BIS_SR(LPM0_bits);
+return 0;
+}
+
+	(c)	Pisque o LED no pino P1.6 numa frequência de 100 Hz e ciclo de trabalho de 75%.
+#include <msp430.h>
+#define LED BIT6
+#define PERIODO 10000
+#define j 7500
+
+int main (void){
+WDTL = WDTPW + WDTHOLD;
+BCSCTL1 = CALBC1_1MHZ;
+DCOCLT = CALDCO_1MHZ;
+P1DIR |= LED;
+P1SEL |= LED;
+P1SEL2 &= ~LED;
+TACCR0 = PERIODO-1;
+TACCR1 = j-1;
+TACCTL1 = OUTMOD_7;
+TACTL = TASSEL_2 + ID_1 + MC_1;
+_BIS_SR(LPM0_bits);
+return 0;
+}
+
+
+
+	
+	2. Pisque o LED no pino P1.6 numa frequência de 1 Hz e ciclo de trabalho de 25%.
+#include <msp430.h>
+#define LED BIT6
+#define PERIODO 62500 
+#define j 15625
+
+int main (void){
+WDTL = WDTPW + WDTHOLD;
+BCSCTL1 = CALBC1_1MHZ;
+DCOCLT = CALDCO_1MHZ;
+P1DIR |= LED;
+P1SEL |= LED;
+P1SEL2 &= ~LED;
+TACCR0 = PERIODO;
+TACCR1 = j;
+TACCTL1 = OUTMOD_7;
+TACTL = TASSEL_2 + ID_3 + MC_3;
+_BIS_SR(LPM0_bits);
+return 0;
+}
+
+	
+	3. Pisque o LED no pino P1.6 numa frequência de 1 Hz e ciclo de trabalho de 50%.
+#include <msp430.h>
+#define LED BIT6
+#define PERIODO 62500 
+#define j 31250
+
+int main (void){
+WDTL = WDTPW + WDTHOLD;
+BCSCTL1 = CALBC1_1MHZ;
+DCOCLT = CALDCO_1MHZ;
+P1DIR |= LED;
+P1SEL |= LED;
+P1SEL2 &= ~LED;
+TACCR0 = PERIODO;
+TACCR1 = j;
+TACCTL1 = OUTMOD_7;
+TACTL = TASSEL_2 + ID_3 + MC_3;
+_BIS_SR(LPM0_bits);
+return 0;
+}
+
+	
+	4. Pisque o LED no pino P1.6 numa frequência de 1 Hz e ciclo de trabalho de 75%.
+#include <msp430.h>
+#define LED BIT6
+#define PERIODO 62500 
+#define j 46875
+
+int main (void){
+WDTL = WDTPW + WDTHOLD;
+BCSCTL1 = CALBC1_1MHZ;
+DCOCLT = CALDCO_1MHZ;
+P1DIR |= LED;
+P1SEL |= LED;
+P1SEL2 &= ~LED;
+TACCR0 = PERIODO;
+TACCR1 = j;
+TACCTL1 = OUTMOD_7;
+TACTL = TASSEL_2 + ID_3 + MC_3;
+_BIS_SR(LPM0_bits);
+return 0;
+}
+
